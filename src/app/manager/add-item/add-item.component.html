@@ -1,0 +1,202 @@
+<p class="mat-display-1">
+  <b>ADD LIBRARY ITEM</b> 
+</p>
+
+<form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+
+
+  <!-- Select option for type -->
+  <p class="mat-subheading-2">
+    Select item
+  </p>
+  <mat-radio-group formControlName="itemType">
+    <mat-radio-button value="book">Book</mat-radio-button> <br> <br>
+    <mat-radio-button value="dvd">DVD</mat-radio-button>
+  </mat-radio-group>
+
+
+  <!-- Common info -->
+  <p class="mat-title">
+    Common information
+  </p>
+
+  <div formGroupName="commonInfo">
+ 
+    <div fxLayout="row">
+      <mat-form-field fxFlex="50%" fxFlex.xs="100%" appearance="fill">
+        <mat-label>Enter ISBN</mat-label>
+        <input matInput placeholder="ISBN" formControlName="isbn"> 
+        <mat-error *ngIf="addItemForm.get('commonInfo.isbn').hasError('required')">
+          ISBN is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="addItemForm.get('commonInfo.isbn').hasError('pattern')">
+          ISBN must be a 5 digit number 
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field fxFlex="50%" fxFlex.xs="100%" appearance="fill">
+        <mat-label>Enter title</mat-label>
+        <input matInput placeholder="Title" formControlName="title">
+        <mat-error *ngIf="addItemForm.get('commonInfo.title').hasError('required')">
+          Title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field fxFlex="50%" fxFlex.xs="100%" appearance="fill">
+        <mat-label>Enter sector</mat-label>
+        <input matInput placeholder="Sector" formControlName="sector">
+        <mat-error *ngIf="addItemForm.get('commonInfo.sector').hasError('required')">
+          Sector is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field fxFlex="50%" fxFlex.xs="100%" appearance="fill">
+        <input 
+          matInput 
+          [max]="maxDate"
+          [matDatepicker]="picker" 
+          placeholder="Publication date" 
+          formControlName="publicationDate">
+        <mat-error *ngIf="addItemForm.get('commonInfo.publicationDate').hasError('required')">
+          Publication date is <strong>required</strong>
+        </mat-error>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    
+  </div>
+
+  
+  <!-- Book info -->
+  <div *ngIf="addItemForm.get('itemType').value == 'book'">
+    <p class="mat-title">
+      Book specific information
+    </p>
+  
+    <!-- Book -->
+    <div formGroupName="bookInfo">
+      <div fxLayout="row" fxLayoutGap="10%" fxLayout.xs="column">
+        <mat-form-field fxFlex="45%" fxFlex.xs="100%" appearance="fill">
+          <mat-label>Enter publisher</mat-label>
+          <input matInput placeholder="Publisher" formControlName="publisher">
+          <mat-error *ngIf="addItemForm.get('bookInfo.publisher').hasError('required')">
+            Publisher is <strong>required</strong>
+          </mat-error> 
+        </mat-form-field>
+        <mat-form-field fxFlex="45%" fxFlex.xs="100%" appearance="fill">
+          <mat-label>Enter no. of pages</mat-label>
+          <input matInput placeholder="Pages" formControlName="noOfPages" type="number">
+          <mat-error *ngIf="addItemForm.get('bookInfo.noOfPages').hasError('required')">
+            No. of pages is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    
+      <div fxLayout="row" formArrayName="authors">
+        <div fxFlex="50%" fxFlex.xs="100%">
+          <mat-form-field 
+            *ngFor="let authorControl of addItemForm.get('bookInfo.authors').controls; let i = index"
+            appearance="fill">
+            <mat-label>Enter author</mat-label>
+            <input matInput placeholder="Author" [formControlName]="i">
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div fxLayout="row">
+        <button type="button" class="btn" mat-raised-button color="accent" 
+        (click)="addNewAuthor()">ADD AUTHOR</button>
+        <button type="button" mat-raised-button color="warn" 
+        (click)="removeAuthor()">REMOVE AUTHOR</button>
+      </div> 
+    </div>
+  </div>
+  
+
+  <!-- DVD info -->
+  <div *ngIf="addItemForm.get('itemType').value == 'dvd'">
+    <p class="mat-title">
+      DVD specific information
+    </p>
+  
+    <!-- DVD -->
+    <div formGroupName="dvdInfo">
+      <div fxLayout="row" fxLayoutGap="10%" fxLayout.xs="column">
+        <mat-form-field fxFlex="45%" fxFlex.xs="100%" appearance="fill"> 
+          <mat-select placeholder="Languages" formControlName="languages" multiple>
+            <mat-select-trigger>
+              {{addItemForm.get('dvdInfo.languages').value ? addItemForm.get('dvdInfo.languages').value[0] : ''}}
+              <span 
+              *ngIf="addItemForm.get('dvdInfo.languages').value?.length > 1" class="example-additional-selection">
+                (+{{addItemForm.get('dvdInfo.languages').value.length - 1}} {{addItemForm.get('dvdInfo.languages').value?.length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let language of languagesList" 
+              [value]="language">{{language}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="addItemForm.get('dvdInfo.languages').hasError('required')">
+            Language is <strong>required</strong>
+          </mat-error> 
+        </mat-form-field> 
+        <mat-form-field fxFlex="45%" fxFlex.xs="100%" appearance="fill"> 
+          <mat-select placeholder="Subtitles" formControlName="subtitles" multiple>
+            <mat-select-trigger>
+              {{addItemForm.get('dvdInfo.subtitles').value ? addItemForm.get('dvdInfo.subtitles').value[0] : ''}}
+              <span *ngIf="addItemForm.get('dvdInfo.subtitles').value?.length > 1" class="example-additional-selection">
+                (+{{addItemForm.get('dvdInfo.subtitles').value.length - 1}} {{addItemForm.get('dvdInfo.subtitles').value?.length === 2 ? 'other' : 'others'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let subtitle of languagesList"  
+              [value]="subtitle">{{subtitle}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="addItemForm.get('dvdInfo.subtitles').hasError('required')">
+            Subtitle is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>     
+      </div>
+    
+      <div fxLayout="row">
+        <mat-form-field fxFlex="45%" fxFlex.xs="100%" class="example-full-width" appearance="fill">
+          <mat-label>Enter producer</mat-label>
+          <input matInput placeholder="Producer" formControlName="producer"> 
+          <mat-error *ngIf="addItemForm.get('dvdInfo.producer').hasError('required')">
+            Producer is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div fxLayout="row" formArrayName="actors">
+        <div fxFlex="50%" fxFlex.xs="100%">
+          <mat-form-field 
+            *ngFor="let actorControl of addItemForm.get('dvdInfo.actors').controls; let i = index"
+            appearance="fill">
+            <mat-label>Enter actor</mat-label>
+            <input matInput placeholder="Actor" [formControlName]="i">
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div fxLayout="row">
+        <button type="button" class="btn" mat-raised-button color="accent" 
+        (click)="addNewActor()">ADD ACTOR</button>
+        <button type="button" mat-raised-button color="warn" 
+        (click)="removeActor()">REMOVE ACTOR</button>
+      </div> 
+  
+    </div>
+  </div>
+  
+
+  <div fxLayout="row" class="margin">
+    <span class="example-spacer"></span>
+    <button type="button" mat-raised-button color="primary" class="btn" routerLink="/manager/books">CANCEL</button>
+    <button type="submit" mat-raised-button color="accent">ADD ITEM</button>
+  </div> 
+
+</form>
+
+

@@ -1,0 +1,28 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="centered" [class.mat-elevation-z8]="true">
+
+    <mat-card class="example-card">
+      <div class="head">
+        <img fxLayoutAlign="center" src="./../../assets/images/lib-man-logo.png" id="logo" alt="">
+      </div>
+      <mat-card-content>
+        <div fxLayout="row">
+          <mat-form-field fxFlex="100%" class="example-full-width">
+            <input matInput placeholder="Email" type="email" formControlName="email">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field fxFlex="100%" class="example-full-width">
+            <input matInput placeholder="Password" type="password" formControlName="password">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <button fxFlex="100%" mat-raised-button color="accent" type="submit">LOGIN</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+        
+  </div>
+</form>
+
+  

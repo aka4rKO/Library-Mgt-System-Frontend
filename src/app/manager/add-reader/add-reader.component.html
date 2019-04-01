@@ -1,0 +1,58 @@
+<p class="mat-display-1">
+  <b>ADD READER</b> 
+</p>
+
+<form [formGroup]="readerForm" (ngSubmit)="onAddReader()">
+
+  <!-- Reader info -->
+  <div fxLayout="row">
+    <mat-form-field fxFlex="45%" fxFlex.xs="100%" appearance="fill">
+      <mat-label>Enter Reader ID</mat-label>
+      <input matInput placeholder="ID" formControlName="readerId" [value]="readerIdVal">
+      <mat-error *ngIf="readerForm.get('readerId').hasError('required')">
+        Reader ID is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row">
+    <mat-form-field fxFlex="45%" fxFlex.xs="100%" appearance="fill">
+      <mat-label>Enter name</mat-label>
+      <input matInput placeholder="Name" formControlName="name">
+      <mat-error *ngIf="readerForm.get('name').hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="readerForm.get('name').hasError('pattern')">
+        Name is invalid
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutGap="10%">
+    <mat-form-field fxFlex="45%" fxFlex.xs="100%" appearance="fill">
+      <mat-label>Enter email</mat-label>
+      <input matInput placeholder="Email" type="email" formControlName="email">
+      <mat-error *ngIf="readerForm.get('email').hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="readerForm.get('email').hasError('email')">
+        Email is invalid
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field fxFlex="45%" fxFlex.xs="100%" appearance="fill">
+      <mat-label>Enter phone</mat-label>
+      <input matInput placeholder="Phone" type="number" formControlName="phoneNumber">
+      <mat-error *ngIf="readerForm.get('phoneNumber').hasError('required')">
+        Phone number is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="readerForm.get('phoneNumber').hasError('pattern')">
+        Phone number should have 10 digits
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" class="margin">
+    <span class="example-spacer"></span>
+    <button mat-raised-button color="primary" type="button" class="btn" routerLink="/manager/books">CANCEL</button>
+    <button mat-raised-button color="accent" type="submit">ADD READER</button>
+  </div>
+
+</form>

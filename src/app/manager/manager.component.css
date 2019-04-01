@@ -1,0 +1,97 @@
+mat-sidenav{
+    width: 200px;
+}
+
+.example-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+}
+
+.example-icon {
+    padding: 0 14px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+#logo-img{
+    height: 2em;
+    margin-top: .25em;
+    margin-right: 1em;
+}
+
+#search-bar{
+    color: #333; 
+    border: none; 
+    border-radius: 100px;
+    background-color: #fafafa; 
+    padding: 10px 16px; 
+    margin-right: 1em; 
+    width: 180px; 
+    max-width: 240px;
+    height: 20%; 
+    box-shadow: none;
+}
+
+#search-bar:focus{
+    outline: none;
+}
+
+@media(min-width: 766px){
+    #sidenav-btn{
+        display: none;
+    }
+}
+
+@media(max-width: 766px){
+    .hidden{
+        display: none;
+    }
+}
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+
+.centered{
+  margin: 2em auto;
+  width: 80%;
+}
+
+@media screen and (max-width: 480px) {
+    .centered{
+            margin: 2em auto;
+            width: 95%;
+    }
+}
+
+mat-toolbar{
+    position: relative;
+}
+  

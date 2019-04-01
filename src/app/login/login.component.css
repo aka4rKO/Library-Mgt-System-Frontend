@@ -1,0 +1,19 @@
+.centered{
+    margin: 10em auto;
+    width: 400px;
+}
+
+#logo{
+    height: 4em;
+    display: block;
+    margin: auto;
+}
+
+.head{
+    height: 4em;
+    background-color: #333;
+}
+
+mat-card-content{
+    margin-top: 2em;
+}

@@ -1,0 +1,68 @@
+<!-- Side nav and content -->
+<mat-sidenav-container class="example-container">
+
+    <!-- Sidenav links and search bar -->
+    <mat-sidenav #sideNav mode="over">
+        <a mat-menu-item routerLink="/manager/books">Books</a>
+        <a mat-menu-item routerLink="/manager/dvds">DVDs</a>
+        <a mat-menu-item routerLink="/manager/add-item">Add item</a>
+        <a mat-menu-item routerLink="/manager/add-reader">Add reader</a>
+        <a mat-menu-item routerLink="/manager/report">Generate report</a>
+        <a mat-menu-item routerLink="/" (click)="logout()">Logout</a>
+    </mat-sidenav> 
+
+    <!-- Primary content -->
+    
+    <mat-toolbar color="primary" [class.mat-elevation-z8]="true">
+
+        <mat-toolbar-row>
+            <button mat-icon-button id="sidenav-btn" (click)="sideNav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        
+            <!-- Logo -->
+            <span><img id="logo-img" src="./../../../assets/images/lib-man-logo.png" alt="logo"></span>
+        
+            <!-- Tabs -->
+            <button mat-button class="hidden" routerLink="/manager/books">Books</button>
+            <button mat-button class="hidden" routerLink="/manager/dvds">DVDs</button>
+        
+            <span class="example-spacer"></span>
+        
+            <!-- Searh bar -->
+            <input id="search-bar" class="hidden" type="text" placeholder="Search">
+        
+            <!-- Menu -->
+            <button class="hidden" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item routerLink="/manager/add-item">
+                <mat-icon>add_circle</mat-icon>
+                <span>Add item</span>
+                </button>
+                <button mat-menu-item routerLink="/manager/add-reader">
+                <mat-icon>add_circle_outline</mat-icon>
+                <span>Add reader</span>
+                </button>
+                <button mat-menu-item routerLink="/manager/report">
+                <mat-icon>assessment</mat-icon>
+                <span>Generate report</span>
+                </button>
+                <button mat-menu-item routerLink="/" (click)="logout()">
+                <mat-icon>power_settings_new</mat-icon>
+                <span>Logout</span>
+                </button>
+            </mat-menu>
+    
+        </mat-toolbar-row>
+    
+    </mat-toolbar>
+      
+    <!-- Other content -->
+    <div class="centered">
+        <router-outlet></router-outlet>
+    </div>
+
+</mat-sidenav-container>
+

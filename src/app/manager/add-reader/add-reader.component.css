@@ -1,0 +1,11 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.btn{
+    margin-right: 1em;
+}
+
+.margin{
+    margin-top: 4em;
+}

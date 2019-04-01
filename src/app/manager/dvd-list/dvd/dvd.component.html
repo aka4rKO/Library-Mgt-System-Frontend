@@ -1,0 +1,62 @@
+<mat-card class="example-card" *ngFor="let dvd of dvds">
+  <mat-card-header>
+    <mat-card-title>{{dvd.title}} (ISBN {{dvd.isbn}})</mat-card-title>
+    <mat-chip-list *ngIf="dvd.status === 'available'">
+      <mat-chip color="accent" selected>available</mat-chip>
+    </mat-chip-list>
+    <mat-chip-list *ngIf="dvd.status === 'not available'">
+      <mat-chip color="warn" selected>not available</mat-chip>
+    </mat-chip-list>
+    <mat-card-subtitle *ngIf="dvd.status === 'not available'">available date {{dvd.availableDate}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <!-- Content -->
+  <mat-card-content>
+    <div class="spacer">
+      <p class="hidden para">
+        <span class="mat-body-2 align">Sector</span>
+        <span class="mat-body-1 spacer">{{dvd.sector}}</span> <br>
+        <span class="mat-body-2 align">Publication date</span>
+        <span class="mat-body-1 spacer">{{dvd.publicationDate | date }}</span> <br>
+        <span class="mat-body-2 align">Producer</span>
+        <span class="mat-body-1 spacer">{{dvd.producer}}</span> <br>
+        <span class="mat-body-2 align">Actors</span>
+        <span class="mat-body-1 spacer" *ngFor="let actor of dvd.actors">{{actor.name}}</span> <br>
+        <span class="mat-body-2 align">Subtitle(s)</span>
+        <span class="mat-body-1 spacer">{{dvd.subtitles}}</span> <br>
+        <span class="mat-body-2 align">Language(s)</span>
+        <span class="mat-body-1 spacer">{{dvd.languages}}</span>
+      </p> 
+    </div>
+  </mat-card-content>
+
+  <!-- Options -->
+  <mat-card-actions>
+    <button mat-button color="accent" class="hidden" (click)="openDialog(dvd.isbn)" [disabled]="dvd.status === 'not available'">BORROW</button>
+    <button mat-button color="accent" class="hidden" (click)="onReturn(dvd.isbn)" [disabled]="dvd.status === 'available'">RETURN</button>
+    <button mat-button color="accent" class="hidden">RESERVE</button>
+    <button mat-button color="warn" class="hidden" (click)="onDelete(dvd.isbn)">DELETE</button>
+
+    <!-- Options when shrinked -->
+    <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialog(dvd.isbn)">
+        <span>Borrow</span>
+        </button>
+        <button mat-menu-item (click)="onReturn(dvd.isbn)">
+        <span>Return</span>
+        </button>
+        <button mat-menu-item>
+        <span>Reserve</span>
+        </button>
+        <button mat-menu-item (click)="onDelete(dvd.isbn)">
+        <span>Delete</span>
+        </button>
+    </mat-menu>
+
+  </mat-card-actions>
+
+</mat-card>
+    
