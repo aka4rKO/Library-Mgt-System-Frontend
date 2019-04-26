@@ -30,5 +30,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 	
 Add route protection in the code  
 
-npm install 
+npm install  
 ng serve
